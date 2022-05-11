@@ -1,0 +1,31 @@
+from Bio import Entrez
+
+
+def fetchid():
+    Entrez.email = "mt.diekman@gmail.com"
+    ids = []
+    terms = ["Deoxyuridine"]
+    for i in terms:
+        handle = Entrez.esearch(db="pubmed", term=i)
+        record = Entrez.read(handle)
+        handle.close()
+        ids.append(record["IdList"])
+    return ids
+
+
+def fetchtilte(idlist):
+    titles = []
+    for i in idlist:
+        for j in i:
+            handle = Entrez.esummary(db="pubmed", id=j, retmode="xml")
+            records = Entrez.parse(handle)
+            for record in records:
+                titles.append(record['Title'])
+        return titles
+
+
+if __name__ == '__main__':
+    idlist = fetchid()
+    print(idlist)
+    titlelist = fetchtilte(idlist)
+    print(titlelist)
