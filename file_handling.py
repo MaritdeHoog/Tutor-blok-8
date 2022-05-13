@@ -1,5 +1,15 @@
 import pandas as pd
 import re
+import mysql.connector
+
+
+connection = mysql.connector.connect(host="mysql.dehoogjes.nl",
+                                     user="dehoogjesnl",
+                                     db="dehoogjesnl",
+                                     password="HoogKlooster19",
+                                     auth_plugin="mysql_native_password")
+
+cursor = connection.cursor()
 
 
 def read_file(input_file):
@@ -32,17 +42,42 @@ def read_file(input_file):
                         temp_list.append(i)
                     elif re.match(r"(^P.*_Zscore$)", temp[i]):
                         temp_list.append(i)
-                    count += 1
+                count += 1
             column_list = []
             for i in temp_list:
                 column_list.append(temp[i])
             mb_list.append(column_list)
+            count += 1
 
-    for row in mb_list:
-        print(row)
+    return mb_list
+
+
+def fill_database(mb_list):
+    for i in range(len(mb_list[0])):
+        for list in mb_list[1:]:
+            cursor.execute("insert into ziektes(ziekte) values('" + list[4] + "')")
+            connection.commit()
+            cursor.execute("insert into pathways(pathway) values('" + list[5] + "')")
+            connection.commit()
+
+            cursor.execute("insert into fluids(fluid) values('" + list[2] + "')")
+            connection.commit()
+            cursor.execute("insert into methaboliten(naam, descerption, HMDB_code, ziektes_ziekte_id) values('" + list[0] + "', '" + list[1] + "', '" + list[6] + "', (select ziekte_id "
+                       "                 from ziektes "
+                       "                 where ziekte like concat('" + list[4] +"')))")
+            connection.commit()
+
+    for i in range(len(mb_list[0])):
+        for list in mb_list[1:]:
+            if re.match(r"(^P.*_Zscore$)", mb_list[0][i]):
+                cursor.execute("insert into personen(z_id, z_score) values('" + mb_list[0][i] + "', '" + list[i] + "')")
+                connection.commit()
 
 
 if __name__ == "__main__":
     mb_file = "Output untargeted metabolomics.xlsx"
 
-    read_file(mb_file)
+    mb_list = read_file(mb_file)
+    fill_database(mb_list)
+
+    connection.close()
