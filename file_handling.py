@@ -52,32 +52,92 @@ def read_file(input_file):
     return mb_list
 
 
-def fill_database(mb_list):
+def fill_ziektes(mb_list):
+    unique_list = []
+    # split diseases per line into unique values
+    # meer op meer relatie?
+    for list in mb_list[1:]:
+        if list[4] != "":
+            temp = list[4].replace("; ", "", 1)
+            temp = temp.replace("'", "")
+            if temp not in unique_list:
+                unique_list.append(temp)
+
+    for i in unique_list:
+        cursor.execute("insert into ziektes(ziekte) values('" + i + "')")
+        connection.commit()
+
+
+def fill_pathways(mb_list):
+    unique_list = []
+    for list in mb_list[1:]:
+        if not re.match(r"(;{1} *$)", list[5]):
+            temp = list[5].replace("; ", "", 1)
+            if temp not in unique_list:
+                unique_list.append(temp)
+
+    for i in unique_list:
+        cursor.execute("insert into pathways(pathway) values('" + i + "')")
+        connection.commit()
+
+
+def fill_fluids(mb_list):
+    unique_list = []
+    # split fluids per line into unique values
+    for list in mb_list[1:]:
+        temp = list[2].split("; ")[1:]
+        for i in temp:
+            if i not in unique_list:
+                unique_list.append(i)
+
+    for i in unique_list:
+        cursor.execute("insert into fluids(fluid) values('" + i + "')")
+        connection.commit()
+
+
+def fill_metabolieten(mb_list):
+    for list in mb_list[1:]:
+        temp = list[4].replace("; ", "", 1)
+        temp = temp.replace("'", "")
+        cursor.execute(
+            "insert into methaboliten(naam, descerption, HMDB_code, ziektes_ziekte_id) values('" + list[0].replace("'", "") + "', '" +
+            list[1].replace("'", "") + "', '" + list[6].replace("'", "") + "', (select ziekte_id "
+                                         "                 from ziektes "
+                                         "                 where ziekte like concat('" + temp + "')))")
+        connection.commit()
+
+
+def fill_personen(mb_list):
     for i in range(len(mb_list[0])):
-        for list in mb_list[1:]:
-            cursor.execute("insert into ziektes(ziekte) values('" + list[4] + "')")
-            connection.commit()
-            cursor.execute("insert into pathways(pathway) values('" + list[5] + "')")
-            connection.commit()
-
-            cursor.execute("insert into fluids(fluid) values('" + list[2] + "')")
-            connection.commit()
-            cursor.execute("insert into methaboliten(naam, descerption, HMDB_code, ziektes_ziekte_id) values('" + list[0] + "', '" + list[1] + "', '" + list[6] + "', (select ziekte_id "
-                       "                 from ziektes "
-                       "                 where ziekte like concat('" + list[4] +"')))")
+        if re.match(r"(^P.*_Zscore$)", mb_list[0][i]):
+            cursor.execute(
+                " insert into Personen(patient_id) values('" + mb_list[0][i] + "')")
             connection.commit()
 
+
+def fill_z(mb_list):
     for i in range(len(mb_list[0])):
-        for list in mb_list[1:]:
-            if re.match(r"(^P.*_Zscore$)", mb_list[0][i]):
-                cursor.execute("insert into personen(z_id, z_score) values('" + mb_list[0][i] + "', '" + list[i] + "')")
-                connection.commit()
-
+        if re.match(r"(^P.*_Zscore$)", mb_list[0][i]):
+            for list in mb_list[1:]:
+                if float(list[i]) > 2 or float(list[i]) < -1.5:
+                    cursor.execute(" insert into z(z_score, methaboliten_met_id, Personen_persoon_id) values('" + list[i] + "', (select met_id "
+                                   " from methaboliten "
+                                   " where naam like concat('" + list[0] + "')), (select persoon_id "
+                                   " from Personen "
+                                   " where patient_id like concat('" + mb_list[0][i] + "')))")
+                    connection.commit()
+# '" + mb_list[0][i].replace("'", "") + "'
 
 if __name__ == "__main__":
     mb_file = "Output untargeted metabolomics.xlsx"
 
     mb_list = read_file(mb_file)
-    fill_database(mb_list)
+
+    # fill_ziektes(mb_list)
+    # fill_pathways(mb_list)
+    # fill_fluids(mb_list)
+    # fill_metabolieten(mb_list)
+    # fill_personen(mb_list)
+    fill_z(mb_list)
 
     connection.close()
