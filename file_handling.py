@@ -122,11 +122,11 @@ def fill_z(mb_list):
                 if float(list[i]) > 2 or float(list[i]) < -1.5:
                     cursor.execute(" insert into z(z_score, methaboliten_met_id, Personen_persoon_id) values('" + list[i] + "', (select met_id "
                                    " from methaboliten "
-                                   " where naam like concat('" + list[0] + "')), (select persoon_id "
+                                   " where naam like concat('" + list[0].replace("'", "") + "')), (select persoon_id "
                                    " from Personen "
-                                   " where patient_id like concat('" + mb_list[0][i] + "')))")
+                                   " where patient_id like concat('" + mb_list[0][i].strip() + "')))")
                     connection.commit()
-# '" + mb_list[0][i].replace("'", "") + "'
+
 
 if __name__ == "__main__":
     mb_file = "Output untargeted metabolomics.xlsx"
