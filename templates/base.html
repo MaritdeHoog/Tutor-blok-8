@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../static/style.css">
+    <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+    <title>
+        {% block title %}
+        {% endblock %}
+    </title>
+</head>
+<body>
+    <!-- This is the navigation bar. -->
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="read_excel.html">Read excel</a></li>
+            <li><a href="results.html">Results</a></li>
+            <li><a href="database.html">Database</a></li>
+        </ul>
+    </nav>
+
+    <!-- This part is for the content, specified per page. -->
+    {% block content %}
+    {% endblock %}
+</body>
+</html>
