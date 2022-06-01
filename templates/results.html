@@ -5,15 +5,29 @@
 {% endblock %}
 
 {% block content %}
-    <!-- Title of the page. -->
-    <h2>Results</h2>
+    <div style='float: left'>
+    Choose a patient
+    <form class="form-inline" method="POST" action="{{ url_for('results_page') }}">
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon">Please select</span>
+                    <select name="comp_select" class="selectpicker form-control">
+                        {% for p in patients %}
+                            <OPTION value={{p}}>{{p}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </div>
+    </form>
+    </div>
 
-    <!-- Summary of the page. -->
-    <p>
-        sample text
-    </p>
+    <div style='float: left' id="chart" class="chart"></div>
 
-    <!-- Seperating line between title/summary and the content. -->
-    <hr>
+    <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+    <script type='text/javascript'>
+        var graphs = {{graphJSON | safe}};
+        Plotly.plot('chart',graphs,{});
+    </script>
 
 {% endblock %}
