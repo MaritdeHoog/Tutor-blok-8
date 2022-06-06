@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %} Database {% endblock %}
+
+{% block content %}
+    <body>
+
+    <div class="header">
+        <h1>Database</h1>
+    </div>
+
+    <div class="row">
+        <div class="column left">
+            <form method="get">
+                <p><b>Zoekterm</b></p>
+
+          <label>
+            <p><input type="text" name="invoer"></p>
+
+          </label>
+                <label for="filter"><p><b>Filters</b></p></label>
+                <select name="filter" id="filter">
+                    <option name="select1" value="patien_id">Patient ID</option>
+                    <option name="select2" value="vziekte">Ziekte</option>
+                </select>
+                <br><br>
+                <button type="submit">Zoeken</button>
+            </form>
+
+            </form>
+
+    </div>
+    </div>
+
+    <div class="column right">
+        <table>
+        <tr>
+            <th>Patient ID</th>
+            <th>Metaboliet</th>
+            <th>Ziekte</th>
+            <th>Z-score</th>
+            <th>Hoeveelheid</th>
+        </tr>
+
+        <tr>
+            {% for data in invoer %}
+                <td> {{ data[0] }}  </td><td> {{ data[1] }} </td>
+                <td> {{ data[2] }} </td><td> {{ data[3] }} </td>
+                <td> {{ data[4] }} </td>
+        </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    </body>
+{% endblock %}
