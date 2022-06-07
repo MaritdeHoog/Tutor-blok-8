@@ -1,12 +1,8 @@
-/* GENERAL */
+/* general design */
 body {
 	font-family: 'Ubuntu', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
 	color: black;
 	background-color: white;
-}
-
-a {
-	color: darkblue;
 }
 
 h2 {
@@ -18,7 +14,7 @@ hr {
 	background-color: black;
 }
 
-/* NAVIGATION BAR */
+/* navigation bar design */
 ul {
 	padding-left: 0;
 	background-color: black;
@@ -63,72 +59,7 @@ ul a:hover {
 	width: 100%;
 }
 
-/* OVERVIEW */
-#organisms {
-	position: relative;
-	table-layout: auto;
-	float: left;
-	font-size: 15px;
-	border-collapse: collapse;
-	width: 49.5%;
-	background-color: gainsboro;
-}
-
-#proteins {
-	position: relative;
-	table-layout: auto;
-	float: right;
-	font-size: 15px;
-	border-collapse: collapse;
-	width: 49.5%;
-	background-color: gainsboro;
-}
-
-/* GRAPHS */
-#graphsleft {
-	float: left;
-	width: 49%;
-	background-color: gainsboro;
-}
-
-#graphsright {
-	float: right;
-	width: 49%;
-	background-color: gainsboro;
-}
-
-#graphs {
-	width: 100%;
-}
-
-/* DATABASE */
-aside {
-	position: sticky;
-	top: 0;
-	padding: 10px;
-	width: 14%;
-	float: left;
-	background-color: gainsboro;
-}
-
-#search {
-	width: 75%;
-}
-
-#identities {
-	width: 35%;
-}
-
-#expect {
-	width: 35%;
-}
-
-#section {
-	width: 84%;
-	float: right;
-	background-color: gainsboro;
-}
-
+/* database design */
 #database {
 	position: relative;
 	table-layout: auto;
@@ -161,31 +92,4 @@ td {
 td a {
 	text-decoration: none;
 	display: block;
-}
-
-/* DETAILS */
-#result {
-	position: relative;
-	table-layout: fixed;
-	font-size: 15px;
-	border-collapse: collapse;
-}
-
-#result td {
-	text-align: left;
-}
-
-#alignment {
-	font-family: "Courier New", monospace;
-}
-
-#alignment td {
-	text-align: left;
-	white-space: pre;
-}
-
-/* ABOUT */
-#logo {
-	float: right;
-	width: 330px;
 }
