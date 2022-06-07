@@ -6,7 +6,7 @@ import mysql.connector
 connection = mysql.connector.connect(host="mysql.dehoogjes.nl",
                                      user="dehoogjesnl",
                                      db="dehoogjesnl",
-                                     password="**************",
+                                     password="HoogKlooster19",
                                      auth_plugin="mysql_native_password")
 
 cursor = connection.cursor()
@@ -96,6 +96,7 @@ def fill_pathways(mb_list):
 
     for list in mb_list[1:]:
         if not re.match(r"(;{1} *$)", list[5]):
+            # removes first ";" character
             temp = list[5].replace("; ", "", 1).strip()
             if temp not in unique_list:
                 if temp != "":
