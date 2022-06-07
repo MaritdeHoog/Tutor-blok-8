@@ -5,21 +5,28 @@
 {% endblock %}
 
 {% block content %}
-    <!-- Title of the page. -->
+    <!-- places the title of the page -->
     <h2>Welcome</h2>
 
-    <!-- Summary of the page. -->
+    <!-- place for the summary of the page -->
     <p>
-        insert summary of the page
+        To determine what kind of metabolic disease a patient possibly
+        has, an application has been created that is capable of reading
+        a file containing metabolic data, retrieve the significant data
+        from this file and visualise this.
+        This web application has 3 separate pages which correspond to
+        different functions of this application. Underneath the images
+        shown below is a short explanation of what each page does.
+
     </p>
 
-    <!-- Seperating line between title/summary and the content. -->
     <hr>
 
-    <!-- Clicking on the images leads to the corresponding pages. Shows a short summary of each page. -->
+    <!-- adds figures to the home page, where you can click on the
+         the images to go to the corresponding page -->
     <!-- leads to the page to import user metabolic Excel file -->
     <figure id="fighome">
-        <a href="read_excel.html"><img src="../static/excel_pic.png" id="home" width="250" height="250"></a>
+        <a href="read_excel.html"><img src="../static/excel_pic.png" id="home" width="250" height="300"></a>
         <figcaption>
             <b>Read excel file</b>
             <br>
@@ -29,7 +36,7 @@
 
     <!-- leads to the results page -->
     <figure id="fighome">
-        <a href="results.html"><img src="../static/sunburst_pic.png" id="home" width="250" height="250"></a>
+        <a href="results.html"><img src="../static/sunburst_pic.png" id="home" width="250" height="300"></a>
         <figcaption>
             <b>Results</b>
             <br>
@@ -39,11 +46,11 @@
 
     <!-- leads to the database page -->
     <figure id="fighome">
-        <a href="database.html"><img src="../static/database.png" id="home" width="250" height="250"></a>
+        <a href="database.html"><img src="../static/database.png" id="home" width="250" height="300"></a>
         <figcaption>
             <b>Database</b>
             <br>
-            View the database..
+            View the database.
         </figcaption>
     </figure>
 
