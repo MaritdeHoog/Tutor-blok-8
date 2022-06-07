@@ -12,12 +12,14 @@
 
     <!-- Summary of the page. -->
     <p>
-        Drop an Excel file containing the metabolic measurement results to look for potential metabolic diseases.
+        Select an Excel file containing the metabolic measurement
+        results to look for potential metabolic diseases.
     </p>
 
-    <!-- Seperating line between title/summary and the content. -->
     <hr>
 
+    <!-- redirects user to uploader page to show upload has been
+         successful -->
     <form action = "http://localhost:5000/uploader" method = "POST"
          enctype = "multipart/form-data">
          <input type = "file" name = "file" />
