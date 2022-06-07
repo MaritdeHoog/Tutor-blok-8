@@ -68,12 +68,12 @@ def upload_file():
         f = request.files['file']
         f.save(secure_filename(f.filename))
         print(f.filename)
-        new_filename = f.filename.replace(" ", "_")
+        # new_filename = f.filename.replace(" ", "_")
         # check to see if the file is an excel file
-        if "xlsx" not in new_filename:
-            pass
-        else:
-            file_from_webpage.new_data(new_filename)
+        # if "xlsx" not in new_filename:
+        #    pass
+        # else:
+        #    file_from_webpage.new_data(new_filename)
 
         return render_template("uploader.html", filename=f.filename)
 
